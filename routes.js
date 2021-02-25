@@ -14,7 +14,13 @@ let nextId = 5;
 
 // GET /movies - respond with a JSON array of movies
 routes.get("/movies", (req, res) => {
-  res.json(movies);
+  const minYear = parseInt(req.query.minYear);
+  if (minYear) {
+    const filteredMovies = movies.filter((movie) => movie.year >= minYear);
+    res.json(filteredMovies);
+  } else {
+    res.json(movies);
+  }
 });
 
 routes.get("/movies/:id", (req, res) => {
